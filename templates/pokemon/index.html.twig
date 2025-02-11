@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pokemon index{% endblock %}
+
+{% block body %}
+    <h1>Pokemon index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Number</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Image</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pokemon in pokemon %}
+            <tr>
+                <td>{{ pokemon.id }}</td>
+                <td>{{ pokemon.number }}</td>
+                <td>{{ pokemon.name }}</td>
+                <td>{{ pokemon.type ? pokemon.type|join(', ') : '' }}</td>
+                <td>{{ pokemon.image }}</td>
+                <td>
+                    <a href="{{ path('app_pokemon_show', {'id': pokemon.id}) }}">show</a>
+                    <a href="{{ path('app_pokemon_edit', {'id': pokemon.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_pokemon_new') }}">Create new</a>
+{% endblock %}

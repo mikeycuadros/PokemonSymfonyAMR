@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Battle{% endblock %}
+
+{% block body %}
+    <h1>Battle</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ battle.id }}</td>
+            </tr>
+            <tr>
+                <th>Winner</th>
+                <td>{{ battle.winner }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_battle_index') }}">back to list</a>
+
+    <a href="{{ path('app_battle_edit', {'id': battle.id}) }}">edit</a>
+
+    {{ include('battle/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pokedex{% endblock %}
+
+{% block body %}
+    <h1>Pokedex</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ pokedex.id }}</td>
+            </tr>
+            <tr>
+                <th>Level</th>
+                <td>{{ pokedex.level }}</td>
+            </tr>
+            <tr>
+                <th>Strength</th>
+                <td>{{ pokedex.strength }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_pokedex_index') }}">back to list</a>
+
+    <a href="{{ path('app_pokedex_edit', {'id': pokedex.id}) }}">edit</a>
+
+    {{ include('pokedex/_delete_form.html.twig') }}
+{% endblock %}

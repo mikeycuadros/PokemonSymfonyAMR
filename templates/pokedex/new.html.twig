@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Pokedex{% endblock %}
+
+{% block body %}
+    <h1>Create new Pokedex</h1>
+
+    {{ include('pokedex/_form.html.twig') }}
+
+    <a href="{{ path('app_pokedex_index') }}">back to list</a>
+{% endblock %}
