@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\PokedexRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PokedexRepository::class)]
@@ -21,19 +19,11 @@ class Pokedex
     #[ORM\Column]
     private ?int $strength = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'pokedexes')]
     private ?User $user = null;
 
-    /**
-     * @var Collection<int, Pokemon>
-     */
-    #[ORM\OneToMany(targetEntity: Pokemon::class, mappedBy: 'pokedex')]
-    private Collection $pokemon;
-
-    public function __construct()
-    {
-        $this->pokemon = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'pokedexes')]
+    private ?Pokemon $pokemon = null;
 
     public function getId(): ?int
     {
@@ -76,32 +66,14 @@ class Pokedex
         return $this;
     }
 
-    /**
-     * @return Collection<int, Pokemon>
-     */
-    public function getPokemon(): Collection
+    public function getPokemon(): ?Pokemon
     {
         return $this->pokemon;
     }
 
-    public function addPokemon(Pokemon $pokemon): static
+    public function setPokemon(?Pokemon $pokemon): static
     {
-        if (!$this->pokemon->contains($pokemon)) {
-            $this->pokemon->add($pokemon);
-            $pokemon->setPokedex($this);
-        }
-
-        return $this;
-    }
-
-    public function removePokemon(Pokemon $pokemon): static
-    {
-        if ($this->pokemon->removeElement($pokemon)) {
-            // set the owning side to null (unless already changed)
-            if ($pokemon->getPokedex() === $this) {
-                $pokemon->setPokedex(null);
-            }
-        }
+        $this->pokemon = $pokemon;
 
         return $this;
     }

@@ -3,8 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Battle;
-use App\Entity\Pokemon;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,10 +13,6 @@ class BattleType extends AbstractType
     {
         $builder
             ->add('winner')
-            ->add('enemy', EntityType::class, [
-                'class' => Pokemon::class,
-                'choice_label' => 'id',
-            ])
         ;
     }
 

@@ -13,27 +13,12 @@ class Battle
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Pokemon $enemy = null;
-
     #[ORM\Column(length: 255)]
     private ?string $winner = null;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getEnemy(): ?Pokemon
-    {
-        return $this->enemy;
-    }
-
-    public function setEnemy(?Pokemon $enemy): static
-    {
-        $this->enemy = $enemy;
-
-        return $this;
     }
 
     public function getWinner(): ?string

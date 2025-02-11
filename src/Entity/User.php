@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -33,6 +35,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    /**
+     * @var Collection<int, Pokedex>
+     */
+    #[ORM\OneToMany(targetEntity: Pokedex::class, mappedBy: 'user')]
+    private Collection $pokedexes;
+
+    public function __construct()
+    {
+        $this->pokedexes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -107,5 +120,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Pokedex>
+     */
+    public function getPokedexes(): Collection
+    {
+        return $this->pokedexes;
+    }
+
+    public function addPokedex(Pokedex $pokedex): static
+    {
+        if (!$this->pokedexes->contains($pokedex)) {
+            $this->pokedexes->add($pokedex);
+            $pokedex->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePokedex(Pokedex $pokedex): static
+    {
+        if ($this->pokedexes->removeElement($pokedex)) {
+            // set the owning side to null (unless already changed)
+            if ($pokedex->getUser() === $this) {
+                $pokedex->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

@@ -2,9 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Pokedex;
 use App\Entity\Pokemon;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,10 +16,6 @@ class PokemonType extends AbstractType
             ->add('name')
             ->add('type')
             ->add('image')
-            ->add('pokedex', EntityType::class, [
-                'class' => Pokedex::class,
-                'choice_label' => 'id',
-            ])
         ;
     }
 

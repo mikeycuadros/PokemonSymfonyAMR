@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PokemonRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -26,8 +28,16 @@ class Pokemon
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
-    #[ORM\ManyToOne(inversedBy: 'pokemon')]
-    private ?Pokedex $pokedex = null;
+    /**
+     * @var Collection<int, Pokedex>
+     */
+    #[ORM\OneToMany(targetEntity: Pokedex::class, mappedBy: 'pokemon')]
+    private Collection $pokedexes;
+
+    public function __construct()
+    {
+        $this->pokedexes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -82,14 +92,32 @@ class Pokemon
         return $this;
     }
 
-    public function getPokedex(): ?Pokedex
+    /**
+     * @return Collection<int, Pokedex>
+     */
+    public function getPokedexes(): Collection
     {
-        return $this->pokedex;
+        return $this->pokedexes;
     }
 
-    public function setPokedex(?Pokedex $pokedex): static
+    public function addPokedex(Pokedex $pokedex): static
     {
-        $this->pokedex = $pokedex;
+        if (!$this->pokedexes->contains($pokedex)) {
+            $this->pokedexes->add($pokedex);
+            $pokedex->setPokemon($this);
+        }
+
+        return $this;
+    }
+
+    public function removePokedex(Pokedex $pokedex): static
+    {
+        if ($this->pokedexes->removeElement($pokedex)) {
+            // set the owning side to null (unless already changed)
+            if ($pokedex->getPokemon() === $this) {
+                $pokedex->setPokemon(null);
+            }
+        }
 
         return $this;
     }
