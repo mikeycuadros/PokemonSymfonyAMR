@@ -6,6 +6,10 @@ use App\Entity\Battle;
 use App\Form\BattleType;
 use App\Repository\BattleRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Pokedex;
+use App\Repository\PokedexRepository;
+use App\Entity\Pokemon;
+use App\Repository\PokemonRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,6 +43,34 @@ final class BattleController extends AbstractController
         return $this->render('battle/new.html.twig', [
             'battle' => $battle,
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/fight', name: 'app_battle_view', methods: ['GET'])]
+    public function view(PokedexRepository $pokedexRepository): Response
+    {
+        return $this->render('battle/fight.html.twig',[
+            'pokedexes' => $pokedexRepository->findAll(),
+        ]);
+
+    }
+
+    #[Route('/battle/pokemonBattle/{pokemonId}/{pokedexId}', name: 'app_battle_pokemon', methods: ['GET'])]
+    public function pokemon(int $pokemonId, int $pokedexId, PokemonRepository $pokemonRepository, PokedexRepository $pokedexRepository): Response
+    {
+        $pokemon = $pokemonRepository->find($pokemonId);
+        $pokedex = $pokedexRepository->find($pokedexId);
+        $enemy = $pokemonRepository->findRandomPokemon(); 
+        
+        
+        if (!$pokemon) {
+            throw $this->createNotFoundException('El Pokémon no existe.');
+        }
+
+        return $this->render('battle/pokemonBattle.html.twig', [
+            'pokemon' => $pokemon,
+            'pokedex' => $pokedex,
+            'enemy' => $enemy,
         ]);
     }
 
@@ -78,4 +110,6 @@ final class BattleController extends AbstractController
 
         return $this->redirectToRoute('app_battle_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    
 }

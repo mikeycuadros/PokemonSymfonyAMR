@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Figth{% endblock %}
+
+{% block body %}
+    <h3>Parece que tienes una batalla pendiente...</h3>
+
+    <h2>Elige tu pokemon:</h2>
+
+    <table class="table" style="text-align:center">
+        <thead>
+            <tr>
+                <th>Pokemon</th>
+                <th>Nivel</th>
+                <th>Fuerza</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pokedex in pokedexes %}
+            <tr>
+                <td>{{ pokedex.pokemon.name }}</td>
+                <td>{{ pokedex.level }}</td>
+                <td>{{ pokedex.strength }}</td>
+                <td>
+                    <form action="{{ path('app_battle_pokemon', {'pokemonId': pokedex.pokemon.id, 'pokedexId': pokedex.id}) }}" method="GET" class="d-inline">
+                        <button type="submit" class="btn btn-success btn-sm">Elegir</button>
+                    </form>
+                </td>
+                {# <td>
+                    <a href="{{ path('app_pokedex_show', {'id': pokedex.id}) }}">show</a>
+                    <a href="{{ path('app_pokedex_edit', {'id': pokedex.id}) }}">edit</a>
+                </td> #}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+    
+{% endblock %}

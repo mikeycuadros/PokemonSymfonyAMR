@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Battle{% endblock %}
+
+{% block body %}
+    <h2>¿Ya has elegido tu pokemon?</h2>
+    <h2>Empezemos con la batalla...</h2>
+
+    <h3>Pokemon elegido:</h3
+
+
+   <table>
+        <thead>
+            <tr>
+                <th>Pokémon</th>
+                <th>Nivel</th>
+                <th>Fuerza</th>
+            </tr><br>
+        </thead>
+        <tbody>
+            <tr >
+                <td>{{ pokemon.name }}</td>
+                <td>{{ pokedex.level }}</td>
+                <td>{{ pokedex.strength }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Pokemon contrincante:</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Pokémon</th>
+                <th>Nivel</th>
+                <th>Fuerza</th>
+            </tr><br>
+        </thead>
+        <tbody>
+            <tr >
+                <td>{{ enemy.name }}</td>
+                <td>{{ random(1, 3) }}</td>
+                <td>{{ random(5, 10) }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Ganador:</h3>
+
+
+
+
+
+
+
+    
+{% endblock %}
