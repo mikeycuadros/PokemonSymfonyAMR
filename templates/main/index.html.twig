@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}Hazte con todos!{% endblock %}
 
 {% block body %}
 <style>
@@ -8,13 +8,24 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>¡Bienvenido a la Pokemon App!</h1>
+    <p>Comienza tu aventura pokemon y atrapa a todos.</p>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/cuadr/Documents/Repositorios/Symfony/chat/src/Controller/MainController.php</code></li>
-        <li>Your template at <code>C:/Users/cuadr/Documents/Repositorios/Symfony/chat/templates/main/index.html.twig</code></li>
-    </ul>
-</div>
+    {% if not app.user %}
+        <a href="{{ path('app_login') }}" >Iniciar Sesión</a>
+        <a href="{{ path('app_register') }}" >Registrarse</a>
+    {% else %}
+        <a href="{{ path('app_pokedex_index') }}">Ver Pokémon</a>
+        <a href="{{ path('hunt_pokemon') }}">Cazar Pokemon</a>
+    {% endif %}
+
+    <br/><br/>
+
+    {% for type, messages in app.flashes %}
+        {% for message in messages %}
+        <div class="alert alert-{{ type }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endfor %}
 {% endblock %}

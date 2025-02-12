@@ -42,6 +42,24 @@ final class PokedexController extends AbstractController
         ]);
     }
 
+    #[Route('/pokedex/{id}/train', name: 'train_pokemon', methods: ['POST'])]
+    public function trainPokemon(Pokedex $pokedex, EntityManagerInterface $entityManager): Response
+    {
+        // Aumentar la fuerza del pokemon en 10 puntos
+        $pokedex->setStrength($pokedex->getStrength() + 10);
+
+        // Guardar los cambios en la base de datos
+        $entityManager->flush();
+
+        // Mostrar un mensaje de éxito
+        $message = '¡Pokemon entrenado!';
+        $type = 'success';
+        $this->addFlash($type, $message);
+
+        // Redirigir a la página anterior (o a donde desees)
+        return $this->redirectToRoute('app_pokedex_index');
+    }
+
     #[Route('/{id}', name: 'app_pokedex_show', methods: ['GET'])]
     public function show(Pokedex $pokedex): Response
     {

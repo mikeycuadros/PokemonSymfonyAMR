@@ -22,8 +22,8 @@ class Pokemon
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $type = [];
+    #[ORM\Column(type: "json")]
+    private $type;
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;

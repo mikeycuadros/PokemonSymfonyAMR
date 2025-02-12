@@ -3,27 +3,31 @@
 {% block title %}Pokedex index{% endblock %}
 
 {% block body %}
-    <h1>Pokedex index</h1>
+    <h1>Pokedex</h1>
 
-    <table class="table">
+    <table class="table" style="text-align:center">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Level</th>
-                <th>Strength</th>
-                <th>actions</th>
+                <th>Pokemon</th>
+                <th>Nivel</th>
+                <th>Fuerza</th>
             </tr>
         </thead>
         <tbody>
         {% for pokedex in pokedexes %}
             <tr>
-                <td>{{ pokedex.id }}</td>
+                <td>{{ pokedex.pokemon.name }}</td>
                 <td>{{ pokedex.level }}</td>
                 <td>{{ pokedex.strength }}</td>
                 <td>
+                    <form action="{{ path('train_pokemon', {'id': pokedex.id}) }}" method="POST" class="d-inline">
+                        <button type="submit" class="btn btn-success btn-sm">Entrenar</button>
+                    </form>
+                </td>
+                {# <td>
                     <a href="{{ path('app_pokedex_show', {'id': pokedex.id}) }}">show</a>
                     <a href="{{ path('app_pokedex_edit', {'id': pokedex.id}) }}">edit</a>
-                </td>
+                </td> #}
             </tr>
         {% else %}
             <tr>
@@ -33,5 +37,13 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_pokedex_new') }}">Create new</a>
+    {% for type, messages in app.flashes %}
+        {% for message in messages %}
+        <div class="alert alert-{{ type }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endfor %}
+
+    {# <a href="{{ path('app_pokedex_new') }}">Create new</a> #}
 {% endblock %}

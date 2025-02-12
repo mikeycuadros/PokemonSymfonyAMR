@@ -40,4 +40,12 @@ class PokemonRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    public function findRandomPokemon(): ?Pokemon
+    {
+        $pokemons = $this->findAll();
+        if (empty($pokemons)) {
+            return null;
+        }
+        return $pokemons[array_rand($pokemons)];
+    }
 }

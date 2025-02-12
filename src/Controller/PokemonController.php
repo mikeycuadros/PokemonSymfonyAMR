@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Pokedex;
 use App\Entity\Pokemon;
 use App\Form\PokemonType;
 use App\Repository\PokemonRepository;
@@ -42,6 +43,51 @@ final class PokemonController extends AbstractController
         ]);
     }
 
+    #[Route("/hunt", name: "hunt_pokemon", methods: ['GET'])]
+    public function huntPokemon(EntityManagerInterface $entityManager): Response
+    {
+        $pokemon = $entityManager->getRepository(Pokemon::class)->findRandomPokemon();
+
+        if (!$pokemon) {
+            $message = 'No hay pokemon disponibles para capturar.';
+            $type = 'error';
+            $this->addFlash($type, $message);
+            return $this->redirectToRoute('app_main');
+        }
+
+        return $this->render('pokemon/hunt.html.twig', [
+            'pokemon' => $pokemon,
+        ]);
+    }
+
+    #[Route("/{id}/capture", name: "capture_pokemon",  methods: ['POST'])]
+    public function attemptCapture(Pokemon $pokemon, EntityManagerInterface $entityManager): Response
+    {
+        
+        $user = $this->getUser();
+        $probability = rand(1, 100);
+
+        if ($probability <= 60) {
+            $pokedex = new Pokedex();
+            $pokedex->setUser($user);
+            $pokedex->setPokemon($pokemon);
+            $pokedex->setLevel(1);
+            $pokedex->setStrength(10);
+
+            $entityManager->persist($pokedex);
+            $entityManager->flush();
+
+            $message = '¡Pokemon capturado!';
+            $type = 'success';
+        } else {
+            $message = 'El pokemon escapó.';
+            $type = 'error';
+        }
+
+        $this->addFlash($type, $message);
+        return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
+    }
+
     #[Route('/{id}', name: 'app_pokemon_show', methods: ['GET'])]
     public function show(Pokemon $pokemon): Response
     {
@@ -78,4 +124,6 @@ final class PokemonController extends AbstractController
 
         return $this->redirectToRoute('app_pokemon_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    
 }

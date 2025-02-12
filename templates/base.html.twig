@@ -12,7 +12,7 @@
         {% endblock %}
     </head>
     <body>
-        {% if app.user %}
+        {# {% if app.user %}
             <div class="navbar">
             Hola {{app.user.username}}, <a href="{{ path('app_logout') }}">Logout</a>
             </div>
@@ -20,7 +20,7 @@
             <div class="navbar">
                 <a href="{{ path('app_login') }}">Login</a>
             </div>
-        {% endif %}
+        {% endif %} #}
         {% block body %}{% endblock %}
     </body>
 </html>

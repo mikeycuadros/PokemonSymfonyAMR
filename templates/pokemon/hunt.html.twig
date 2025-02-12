@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cazar Pokemon{% endblock %}
+
+{% block body %}
+
+  {% if pokemon %}
+    <h1>¡Un {{ pokemon.name }} salvaje aparecío!</h1>
+    {# <img src="{{ asset('images/pokemon/' ~ pokemon.image) }}" alt="{{ pokemon.name }}"> #}
+    <form action="{{ path('capture_pokemon', {'id': pokemon.id}) }}" method="POST">
+      <button type="submit">Tirar Pokeball</button>
+    </form>
+    <a href="{{ path('app_main') }}">Dejarlo escapar</a>
+  {% else %}
+    <p>No hay pokemon disponibles para cazar.</p>
+    <a href="{{ path('app_main') }}">Volver al inicio</a>
+  {% endif %}
+
+{% endblock %}
