@@ -55,22 +55,37 @@ final class BattleController extends AbstractController
 
     }
 
-    #[Route('/battle/pokemonBattle/{pokemonId}/{pokedexId}', name: 'app_battle_pokemon', methods: ['GET'])]
-    public function pokemon(int $pokemonId, int $pokedexId, PokemonRepository $pokemonRepository, PokedexRepository $pokedexRepository): Response
+    #[Route('/battle/pokemonBattle/{id}', name: 'app_battle_pokemon', methods: ['GET'])]
+    public function pokemon(Pokedex $pokedex, PokemonRepository $pokemonRepository, PokedexRepository $pokedexRepository, EntityManagerInterface $entityManager): Response
     {
-        $pokemon = $pokemonRepository->find($pokemonId);
-        $pokedex = $pokedexRepository->find($pokedexId);
-        $enemy = $pokemonRepository->findRandomPokemon(); 
-        
-        
-        if (!$pokemon) {
-            throw $this->createNotFoundException('El Pokémon no existe.');
-        }
+       
+        $enemy = $pokemonRepository->findRandomPokemon();
 
+        $enemy_level = random_int(1, 3);
+        $enemy_strength = random_int(5, 10);
+        $pokemonLevel = $pokedex->getLevel();
+        $pokemonStrength = $pokedex->getStrength();
+
+        $enemyTotal = $enemy_level * $enemy_strength;
+        $pokemonTotal = $pokemonLevel * $pokemonStrength;
+
+        $winner = 0;
+
+        if($enemyTotal < $pokemonTotal){
+            $winner = 1;
+            $pokemonLevel++;
+            $pokedex->setLevel($pokemonLevel);
+
+            $entityManager->persist($pokedex);
+            $entityManager->flush();
+        }
+        
         return $this->render('battle/pokemonBattle.html.twig', [
-            'pokemon' => $pokemon,
             'pokedex' => $pokedex,
             'enemy' => $enemy,
+            'enemy_level' => $enemy_level,
+            'enemy_strength' => $enemy_strength,
+            'winner' => $winner,
         ]);
     }
 
