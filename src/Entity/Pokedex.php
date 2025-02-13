@@ -14,10 +14,10 @@ class Pokedex
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $level = null;
+    private ?int $level = 1;
 
     #[ORM\Column]
-    private ?int $strength = null;
+    private ?int $strength = 10;
 
     #[ORM\ManyToOne(inversedBy: 'pokedexes')]
     private ?User $user = null;

@@ -71,8 +71,6 @@ final class PokemonController extends AbstractController
             $pokedex = new Pokedex();
             $pokedex->setUser($user);
             $pokedex->setPokemon($pokemon);
-            $pokedex->setLevel(1);
-            $pokedex->setStrength(10);
 
             $entityManager->persist($pokedex);
             $entityManager->flush();
@@ -87,6 +85,19 @@ final class PokemonController extends AbstractController
         $this->addFlash($type, $message);
         return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
     }
+
+    // #[Route('/{id}/evolve', name: 'app_pokemon_evolve', methods: ['POST'])]
+    // public function evolve(Pokemon $pokemon, EntityManagerInterface $entityManager): Response
+    // {
+    //     if ($pokemon->getLevel() >= 10) {
+    //         $entityManager->flush();
+    //         $message = 'El pokemon ha evolucionado!';
+    //         $type ='success';
+    //         $this->addFlash($type, $message);
+    //         return $this->redirectToRoute('app_pokemon_index', [], Response::HTTP_SEE_OTHER);
+            
+    //     }
+    // }
 
     #[Route('/{id}', name: 'app_pokemon_show', methods: ['GET'])]
     public function show(Pokemon $pokemon): Response

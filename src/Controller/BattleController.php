@@ -56,7 +56,7 @@ final class BattleController extends AbstractController
     }
 
     #[Route('/battle/pokemonBattle/{id}', name: 'app_battle_pokemon', methods: ['GET'])]
-    public function pokemon(Pokedex $pokedex, PokemonRepository $pokemonRepository, PokedexRepository $pokedexRepository, EntityManagerInterface $entityManager): Response
+    public function pokemonBattle(Pokedex $pokedex, PokemonRepository $pokemonRepository, PokedexRepository $pokedexRepository, EntityManagerInterface $entityManager): Response
     {
        
         $enemy = $pokemonRepository->findRandomPokemon();
