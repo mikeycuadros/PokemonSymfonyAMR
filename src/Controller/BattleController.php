@@ -70,6 +70,7 @@ final class BattleController extends AbstractController
         $pokemonTotal = $pokemonLevel * $pokemonStrength;
 
         $winner = 0;
+        $state = 0;
 
         if($enemyTotal < $pokemonTotal){
             $winner = 1;
@@ -78,6 +79,10 @@ final class BattleController extends AbstractController
 
             $entityManager->persist($pokedex);
             $entityManager->flush();
+        }else{
+            $pokedex->getPokemon()->setState($state);
+            $entityManager->flush();
+            
         }
         
         return $this->render('battle/pokemonBattle.html.twig', [
@@ -86,6 +91,7 @@ final class BattleController extends AbstractController
             'enemy_level' => $enemy_level,
             'enemy_strength' => $enemy_strength,
             'winner' => $winner,
+            'state' => $state,
         ]);
     }
 
