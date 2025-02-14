@@ -3,17 +3,97 @@
 {% block title %}Cazar Pokemon{% endblock %}
 
 {% block body %}
+<style>
+    body {
+        background-color: #f0f0f0;
+        font-family: 'Arial', sans-serif;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
 
-  {% if pokemon %}
-    <h1>¡Un {{ pokemon.name }} salvaje aparecío!</h1>
-    {# <img src="{{ asset('images/pokemon/' ~ pokemon.image) }}" alt="{{ pokemon.name }}"> #}
-    <form action="{{ path('app_capture_pokemon', {'id': pokemon.id}) }}" method="POST">
-      <button type="submit">Tirar Pokeball</button>
-    </form>
-    <a href="{{ path('app_main') }}">Dejarlo escapar</a>
-  {% else %}
-    <p>No hay pokemon disponibles para cazar.</p>
-    <a href="{{ path('app_main') }}">Volver al inicio</a>
-  {% endif %}
+    h1 {
+        color: #ff3333;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        font-size: 2.5em;
+        margin-bottom: 20px;
+    }
 
+    p {
+        font-size: 1.2em;
+        color: #555;
+        margin-bottom: 20px;
+    }
+
+    .pokemon-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .pokemon-image {
+        max-width: 200px;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 1em;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin: 10px;
+    }
+
+    .btn-capture {
+        background-color: #ff3333;
+        color: #fff;
+    }
+
+    .btn-capture:hover {
+        background-color: #cc0000;
+    }
+
+    .btn-escape {
+        background-color: #555;
+        color: #fff;
+    }
+
+    .btn-escape:hover {
+        background-color: #333;
+    }
+
+    .btn-return {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .btn-return:hover {
+        background-color: #218838;
+    }
+
+    .no-pokemon {
+        color: #777;
+        font-style: italic;
+    }
+</style>
+
+<div class="pokemon-container">
+    {% if pokemon %}
+        <h1>¡Un {{ pokemon.name }} salvaje apareció!</h1>
+        {# <img src="{{ asset('images/pokemon/' ~ pokemon.image) }}" alt="{{ pokemon.name }}" class="pokemon-image"> #}
+        <form action="{{ path('app_capture_pokemon', {'id': pokemon.id}) }}" method="POST">
+            <button type="submit" class="btn btn-capture">Tirar Pokeball</button>
+        </form>
+        <a href="{{ path('app_main') }}" class="btn btn-escape">Dejarlo escapar</a>
+    {% else %}
+        <p class="no-pokemon">No hay pokemon disponibles para cazar.</p>
+        <a href="{{ path('app_main') }}" class="btn btn-return">Volver al inicio</a>
+    {% endif %}
+</div>
 {% endblock %}

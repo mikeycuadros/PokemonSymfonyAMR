@@ -3,47 +3,143 @@
 {% block title %}Battle{% endblock %}
 
 {% block body %}
-    <h2>¿Ya has elegido tu pokemon?</h2>
-    <h2>Empezemos con la batalla...</h2>
+<style>
+    body {
+        background-color: #f0f0f0;
+        font-family: 'Arial', sans-serif;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
 
-    <h3>Pokemon elegido:</h3
+    .logo {
+        max-width: 200px; /* Ajusta el tamaño del logo según sea necesario */
+        height: auto;
+        margin-bottom: 20px;
+    }
 
+    h2, h3 {
+        color: #ff3333;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px;
+    }
 
-   <table>
-        <thead>
-            <tr>
-                <th>Pokémon</th>
-                <th>Nivel</th>
-                <th>Fuerza</th>
-            </tr><br>
-        </thead>
-        <tbody>
-            <tr >
-                <td>{{ pokedex.pokemon.name }}</td>
-                <td>{{ pokedex.level }}</td>
-                <td>{{ pokedex.strength }}</td>
-            </tr>
-        </tbody>
-    </table>
+    h2 {
+        font-size: 2em;
+    }
 
-    <h3>Pokemon contrincante:</h3>
+    h3 {
+        font-size: 1.5em;
+    }
 
-    <table>
-        <thead>
-            <tr>
-                <th>Pokémon</th>
-                <th>Nivel</th>
-                <th>Fuerza</th>
-            </tr><br>
-        </thead>
-        <tbody>
-            <tr >
-                <td>{{ enemy.name }}</td>
-                <td>{{ enemy_level }}</td>
-                <td>{{ enemy_strength }}</td>
-            </tr>
-        </tbody>
-    </table>
+    .battle-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    table {
+        width: 100%;
+        margin: 20px 0;
+        border-collapse: collapse;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #ff3333;
+        color: #fff;
+        font-size: 1.1em;
+    }
+
+    td {
+        color: #555;
+    }
+
+    .winner-message {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-top: 20px;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .winner-message.win {
+        background-color: #d4edda;
+        color: #28a745;
+        border: 1px solid #c3e6cb;
+    }
+
+    .winner-message.lose {
+        background-color: #f8d7da;
+        color: #dc3545;
+        border: 1px solid #f5c6cb;
+    }
+
+    .pokemon-section {
+        margin-bottom: 30px;
+    }
+
+    .pokemon-section h3 {
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="battle-container">
+    <!-- Logo añadido aquí -->
+    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo">
+
+    <h2>¿Ya has elegido tu Pokémon?</h2>
+    <h2>¡Empecemos con la batalla!</h2>
+
+    <div class="pokemon-section">
+        <h3>Tu Pokémon:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pokémon</th>
+                    <th>Nivel</th>
+                    <th>Fuerza</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ pokedex.pokemon.name }}</td>
+                    <td>{{ pokedex.level }}</td>
+                    <td>{{ pokedex.strength }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pokemon-section">
+        <h3>Pokémon contrincante:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pokémon</th>
+                    <th>Nivel</th>
+                    <th>Fuerza</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ enemy.name }}</td>
+                    <td>{{ enemy_level }}</td>
+                    <td>{{ enemy_strength }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <h3>Ganador:</h3>
 
