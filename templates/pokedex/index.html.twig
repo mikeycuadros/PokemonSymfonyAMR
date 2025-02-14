@@ -19,6 +19,7 @@
                 <td>{{ pokedex.pokemon.name }}</td>
                 <td>{{ pokedex.level }}</td>
                 <td>{{ pokedex.strength }}</td>
+                {% if (pokedex.pokemon.state == 1) %}
                 <td>
                     <form action="{{ path('app_train_pokemon', {'id': pokedex.id}) }}" method="POST">
                         <button type="submit">Entrenar</button>
