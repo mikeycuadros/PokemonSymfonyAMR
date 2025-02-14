@@ -150,6 +150,14 @@
         <button type="submit" class="btn btn-success btn-sm">Subir de nivel</button>
     </form>
 
+    <form action="{{ path('app_pokedex_index') }}" method="GET" class="d-inline">
+        <button type="submit" class="btn btn-success btn-sm">Resucitar pokemons</button>
+    </form>
+    <form action="{{ path('app_capture_pokemon', {'id': enemy.id}) }}" method="POST" class="d-inline">
+        <button type="submit" class="btn btn-success btn-sm">Capturar</button>
+    </form>
+
+
         {% if (pokedex.level % 10 == 0) %}
 
         <p>Puedes evolucionar a tu pokemon!</p>

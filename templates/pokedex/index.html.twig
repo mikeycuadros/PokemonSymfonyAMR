@@ -128,7 +128,9 @@
                         <button type="submit">Entrenar</button>
                     </form>
                 </td>
-<<<<<<< HEAD
+<<<<<<<<< Temporary merge branch 1
+                {% endif %}
+=========
                 <td>
                     {% if pokedex.level % 10 == 0  and pokedex.lastEvolutionLevel != pokedex.level %}
                         <form action="{{ path('app_pokedex_evolve', {'id': pokedex.id}) }}" method="POST">
@@ -136,9 +138,7 @@
                         </form>
                     {% endif %}
                 </td>
-=======
-                {% endif %}
->>>>>>> origin/AdrianArizaLinares
+>>>>>>>>> Temporary merge branch 2
                 {# <td>
                     <a href="{{ path('app_pokedex_show', {'id': pokedex.id}) }}">show</a>
                     <a href="{{ path('app_pokedex_edit', {'id': pokedex.id}) }}">edit</a>
