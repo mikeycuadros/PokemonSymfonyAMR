@@ -42,7 +42,7 @@ final class PokedexController extends AbstractController
         ]);
     }
 
-    #[Route('/pokedex/{id}/train', name: 'train_pokemon', methods: ['POST'])]
+    #[Route('/pokedex/{id}/train', name: 'app_train_pokemon', methods: ['POST'])]
     public function trainPokemon(Pokedex $pokedex, EntityManagerInterface $entityManager): Response
     {
         // Aumentar la fuerza del pokemon en 10 puntos
@@ -59,6 +59,31 @@ final class PokedexController extends AbstractController
         // Redirigir a la página anterior (o a donde desees)
         return $this->redirectToRoute('app_pokedex_index');
     }
+
+        #[Route('/{id}/evolve', name: 'app_pokedex_evolve', methods: ['POST'])]
+        public function evolve(Pokedex $pokedex, EntityManagerInterface $entityManager): Response
+        {
+            if ($pokedex->getLevel() % 10 == 0 && $pokedex->getLastEvolutionLevel() !== $pokedex->getLevel()) {
+                $pokemon = $pokedex->getPokemon();
+                $evolution = $pokemon->getEvolution();
+
+                if ($evolution) {
+                    $pokedex->setPokemon($evolution);
+                    $pokedex->setLastEvolutionLevel($pokedex->getLevel());
+
+                    $entityManager->flush();
+
+                    $message = 'El pokemon ha evolucionado a ' . $evolution->getName() . '!';
+                    $type ='success';   
+                } else {
+                    $message = 'Este Pokémon no puede evolucionar más.';
+                    $type = 'warning';
+                }
+                
+                $this->addFlash($type, $message);
+                return $this->redirectToRoute('app_pokedex_index', [], Response::HTTP_SEE_OTHER);
+            }
+        }
 
     #[Route('/{id}', name: 'app_pokedex_show', methods: ['GET'])]
     public function show(Pokedex $pokedex): Response

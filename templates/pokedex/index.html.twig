@@ -20,9 +20,16 @@
                 <td>{{ pokedex.level }}</td>
                 <td>{{ pokedex.strength }}</td>
                 <td>
-                    <form action="{{ path('train_pokemon', {'id': pokedex.id}) }}" method="POST" class="d-inline">
-                        <button type="submit" class="btn btn-success btn-sm">Entrenar</button>
+                    <form action="{{ path('app_train_pokemon', {'id': pokedex.id}) }}" method="POST">
+                        <button type="submit">Entrenar</button>
                     </form>
+                </td>
+                <td>
+                    {% if pokedex.level % 10 == 0  and pokedex.lastEvolutionLevel != pokedex.level %}
+                        <form action="{{ path('app_pokedex_evolve', {'id': pokedex.id}) }}" method="POST">
+                            <button type="submit">Evolucionar</button>
+                        </form>
+                    {% endif %}
                 </td>
                 {# <td>
                     <a href="{{ path('app_pokedex_show', {'id': pokedex.id}) }}">show</a>
