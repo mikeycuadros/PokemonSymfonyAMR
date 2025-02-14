@@ -37,9 +37,6 @@ class Pokemon
     #[ORM\OneToOne(targetEntity: self::class, cascade: ['persist', 'remove'])]
     private ?self $evolution = null;
 
-    #[ORM\Column]
-    private ?bool $state = true;
-
     public function __construct()
     {
         $this->pokedexes = new ArrayCollection();
@@ -136,18 +133,6 @@ class Pokemon
     public function setEvolution(?self $evolution): static
     {
         $this->evolution = $evolution;
-
-        return $this;
-    }
-
-    public function isState(): ?bool
-    {
-        return $this->state;
-    }
-
-    public function setState(bool $state): static
-    {
-        $this->state = $state;
 
         return $this;
     }
