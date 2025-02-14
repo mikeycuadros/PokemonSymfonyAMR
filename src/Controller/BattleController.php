@@ -47,10 +47,12 @@ final class BattleController extends AbstractController
     }
 
     #[Route('/fight', name: 'app_battle_view', methods: ['GET'])]
-    public function view(PokedexRepository $pokedexRepository): Response
+    public function view(PokedexRepository $pokedexRepository, PokemonRepository $pokemonRepository): Response
     {
+        
         return $this->render('battle/fight.html.twig',[
             'pokedexes' => $pokedexRepository->findAll(),
+            
         ]);
 
     }
@@ -74,9 +76,7 @@ final class BattleController extends AbstractController
 
         if($enemyTotal < $pokemonTotal){
             $winner = 1;
-            $pokemonLevel++;
-            $pokedex->setLevel($pokemonLevel);
-
+            
             $entityManager->persist($pokedex);
             $entityManager->flush();
         }else{
@@ -93,6 +93,19 @@ final class BattleController extends AbstractController
             'winner' => $winner,
             'state' => $state,
         ]);
+    }
+
+    #[Route('/battle/levelUp/{id}', name: 'app_battle_levelUp', methods: ['GET'])]
+    public function levelUp(Pokedex $pokedex, EntityManagerInterface $entityManager): Response
+    {
+        $pokemonLevel = $pokedex->getLevel();
+        $pokemonLevel++;
+        $pokedex->setLevel($pokemonLevel);
+        
+        $entityManager->persist($pokedex);
+        $entityManager->flush();
+        
+        return $this->redirectToRoute('app_pokedex_index');
     }
 
     #[Route('/{id}', name: 'app_battle_show', methods: ['GET'])]
