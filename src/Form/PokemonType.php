@@ -14,12 +14,12 @@ class PokemonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('evolution', EntityType::class, [ // Usar EntityType para relaciones
-                'class' => Pokemon::class,         // Entidad relacionada
-                'choice_label' => 'name',        // Campo a mostrar en el dropdown
-                'placeholder' => 'Selecciona una evolución', // Texto por defecto
-                'label' => 'Evolución',            // Etiqueta del campo
-                'required' => false,               // No es obligatorio
+            ->add('evolution', EntityType::class, [
+                'class' => Pokemon::class,
+                'choice_label' => 'name',
+                'placeholder' => 'Selecciona una evolución',
+                'label' => 'Evolución',
+                'required' => false,
             ])
             ->add('number')
             ->add('name')

@@ -1,6 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+{% endblock %}
+
+
 {% block title %}New Pokemon{% endblock %}
+
 
 {% block body %}
     <h1>Create new Pokemon</h1>

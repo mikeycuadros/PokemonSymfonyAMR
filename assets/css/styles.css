@@ -1,0 +1,74 @@
+/* Contenedor principal del formulario */
+.pokemon-form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para las etiquetas */
+.pokemon-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Estilos para los campos de texto, número y select */
+.pokemon-form .form-control {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Estilos para el campo de selección (EntityType) */
+.pokemon-form select.form-control {
+    appearance: none; /* Elimina el estilo por defecto del select */
+    background-color: white;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+}
+
+/* Estilos para los checkboxes (ChoiceType con expanded y multiple) */
+.pokemon-form .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.pokemon-form .checkbox-group .form-checkbox {
+    margin-right: 8px;
+}
+
+/* Estilos para el botón de submit */
+.pokemon-form button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.pokemon-form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para los mensajes de error */
+.pokemon-form .form-error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
