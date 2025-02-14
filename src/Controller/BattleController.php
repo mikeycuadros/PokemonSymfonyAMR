@@ -80,7 +80,7 @@ final class BattleController extends AbstractController
             $entityManager->persist($pokedex);
             $entityManager->flush();
         }else{
-            $pokedex->getPokemon()->setState($state);
+            $pokedex->setState($state);
             $entityManager->flush();
             
         }
