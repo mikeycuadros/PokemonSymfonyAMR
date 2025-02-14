@@ -128,7 +128,7 @@
                         <button type="submit">Entrenar</button>
                     </form>
                 </td>
-<<<<<<< HEAD
+
                 <td>
                     {% if pokedex.level % 10 == 0  and pokedex.lastEvolutionLevel != pokedex.level %}
                         <form action="{{ path('app_pokedex_evolve', {'id': pokedex.id}) }}" method="POST">
@@ -136,9 +136,17 @@
                         </form>
                     {% endif %}
                 </td>
-=======
+                {% else %}
+
+                
+                <td>
+                    <form action="{{ path('app_pokedex_revive', {'id': pokedex.id}) }}" method="POST">
+                        <button type="submit">Revivir</button>
+                    </form>
+                </td>
+
                 {% endif %}
->>>>>>> origin/AdrianArizaLinares
+
                 {# <td>
                     <a href="{{ path('app_pokedex_show', {'id': pokedex.id}) }}">show</a>
                     <a href="{{ path('app_pokedex_edit', {'id': pokedex.id}) }}">edit</a>
