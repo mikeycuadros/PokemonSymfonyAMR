@@ -1,0 +1,35 @@
+<?php
+
+declare(strict_types=1);
+
+namespace DoctrineMigrations;
+
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
+
+/**
+ * Auto-generated Migration: Please modify to your needs!
+ */
+final class Version20250214103041 extends AbstractMigration
+{
+    public function getDescription(): string
+    {
+        return '';
+    }
+
+    public function up(Schema $schema): void
+    {
+        // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE pokemon ADD evolution_id INT DEFAULT NULL, ADD state TINYINT(1) NOT NULL, CHANGE type type JSON NOT NULL');
+        $this->addSql('ALTER TABLE pokemon ADD CONSTRAINT FK_62DC90F3CDFF215A FOREIGN KEY (evolution_id) REFERENCES pokemon (id)');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_62DC90F3CDFF215A ON pokemon (evolution_id)');
+    }
+
+    public function down(Schema $schema): void
+    {
+        // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE pokemon DROP FOREIGN KEY FK_62DC90F3CDFF215A');
+        $this->addSql('DROP INDEX UNIQ_62DC90F3CDFF215A ON pokemon');
+        $this->addSql('ALTER TABLE pokemon DROP evolution_id, DROP state, CHANGE type type LONGTEXT NOT NULL COMMENT \'(DC2Type:array)\'');
+    }
+}

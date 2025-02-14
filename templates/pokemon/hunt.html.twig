@@ -87,7 +87,7 @@
     {% if pokemon %}
         <h1>¡Un {{ pokemon.name }} salvaje apareció!</h1>
         {# <img src="{{ asset('images/pokemon/' ~ pokemon.image) }}" alt="{{ pokemon.name }}" class="pokemon-image"> #}
-        <form action="{{ path('capture_pokemon', {'id': pokemon.id}) }}" method="POST">
+        <form action="{{ path('app_capture_pokemon', {'id': pokemon.id}) }}" method="POST">
             <button type="submit" class="btn btn-capture">Tirar Pokeball</button>
         </form>
         <a href="{{ path('app_main') }}" class="btn btn-escape">Dejarlo escapar</a>

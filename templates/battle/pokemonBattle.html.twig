@@ -142,12 +142,34 @@
     </div>
 
     <h3>Ganador:</h3>
-    <div class="winner-message {% if winner == 1 %}win{% else %}lose{% endif %}">
-        {% if winner == 1 %}
-            ¡Has ganado la batalla!
-        {% else %}
-            ¡Has perdido la batalla!
+
+    {% if (winner == 1) %}
+
+    <p>Has ganado la batalla!</p><br/>
+    <form action="{{ path('app_battle_levelUp', {'id': pokedex.id}) }}" method="GET" class="d-inline">
+        <button type="submit" class="btn btn-success btn-sm">Subir de nivel</button>
+    </form>
+
+        {% if (pokedex.level % 10 == 0) %}
+
+        <p>Puedes evolucionar a tu pokemon!</p>
+
         {% endif %}
-    </div>
-</div>
+
+
+    {% else %}
+
+    <p>Has perdido la batalla!</p><br>
+    <p>Tu pokemon ha quedado malherido</p>
+
+    {% endif %}
+
+
+    <a href="{{ path('app_main') }}">Volver al inicio</a>
+    <a href="{{ path('app_pokedex_index') }}">Ir a Pokedex</a>
+    <a href= "{{ path('app_battle_view') }}">Volver a luchar</a>
+
+
+
+    
 {% endblock %}

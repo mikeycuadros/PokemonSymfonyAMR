@@ -97,11 +97,17 @@
                 <td>{{ pokedex.pokemon.name }}</td>
                 <td>{{ pokedex.level }}</td>
                 <td>{{ pokedex.strength }}</td>
+                {% if (pokedex.pokemon.state == 1) %}
                 <td>
                     <form action="{{ path('app_battle_pokemon', {'id': pokedex.id}) }}" method="GET" class="d-inline">
                         <button type="submit" class="btn btn-success">Elegir</button>
                     </form>
                 </td>
+                {% endif %}
+                {# <td>
+                    <a href="{{ path('app_pokedex_show', {'id': pokedex.id}) }}">show</a>
+                    <a href="{{ path('app_pokedex_edit', {'id': pokedex.id}) }}">edit</a>
+                </td> #}
             </tr>
         {% else %}
             <tr>

@@ -25,6 +25,12 @@ class Pokedex
     #[ORM\ManyToOne(inversedBy: 'pokedexes')]
     private ?Pokemon $pokemon = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $lastEvolutionLevel = null;
+
+    #[ORM\Column]
+    private ?bool $state = true;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +80,30 @@ class Pokedex
     public function setPokemon(?Pokemon $pokemon): static
     {
         $this->pokemon = $pokemon;
+
+        return $this;
+    }
+
+    public function getLastEvolutionLevel(): ?int
+    {
+        return $this->lastEvolutionLevel;
+    }
+
+    public function setLastEvolutionLevel(?int $lastEvolutionLevel): static
+    {
+        $this->lastEvolutionLevel = $lastEvolutionLevel;
+
+        return $this;
+    }
+
+    public function isState(): ?bool
+    {
+        return $this->state;
+    }
+
+    public function setState(bool $state): static
+    {
+        $this->state = $state;
 
         return $this;
     }
