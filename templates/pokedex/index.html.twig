@@ -195,17 +195,30 @@
                 <td>{{ pokedex.level }}</td>
                 <td>{{ pokedex.strength }}</td>
                 <td>
-                    {% if pokedex.state == 1 %}
-                        <form action="{{ path('app_train_pokemon', {'id': pokedex.id}) }}" method="POST" class="d-inline">
-                            <button type="submit" class="btn btn-success">Entrenar</button>
-                        </form>
-                    {% endif %}
+                    {% if (pokedex.state == 1) %}
+                <td>
+                    <form action="{{ path('app_train_pokemon', {'id': pokedex.id}) }}" method="POST">
+                        <button type="submit">Entrenar</button>
+                    </form>
+                </td>
 
-                    {% if pokedex.level % 10 == 0 and pokedex.lastEvolutionLevel != pokedex.level %}
-                        <form action="{{ path('app_pokedex_evolve', {'id': pokedex.id}) }}" method="POST" class="d-inline">
-                            <button type="submit" class="btn btn-success">Evolucionar</button>
+                <td>
+                    {% if pokedex.level % 10 == 0  and pokedex.lastEvolutionLevel != pokedex.level %}
+                        <form action="{{ path('app_pokedex_evolve', {'id': pokedex.id}) }}" method="POST">
+                            <button type="submit">Evolucionar</button>
                         </form>
                     {% endif %}
+                </td>
+                {% else %}
+
+                
+                <td>
+                    <form action="{{ path('app_pokedex_revive', {'id': pokedex.id}) }}" method="POST">
+                        <button type="submit">Revivir</button>
+                    </form>
+                </td>
+
+                {% endif %}
                 </td>
             </tr>
         {% else %}
