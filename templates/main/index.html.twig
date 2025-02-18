@@ -5,32 +5,41 @@
 {% block body %}
 <style>
     body {
-        background-color: #f0f0f0;
-        font-family: 'Arial', sans-serif;
-        color: #333;
-        text-align: center;
-        padding: 20px;
+        background-color: #ffcb05;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50%;
+        margin: 0;
+        padding-top: 20vh;
+        flex-direction: column;
     }
 
     .example-wrapper {
-        margin: 1em auto;
-        max-width: 800px;
-        width: 95%;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        border: 5px solid #3d7dca;
+        width: 100%;
+        max-width: 600px;
+        transition: transform 0.3s ease;
+    }
+
+    .example-wrapper:hover {
+        transform: scale(1.02);
     }
 
     h1 {
-        color:rgb(0, 81, 255);
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        font-size: 2.5em;
-        margin-bottom: 10px;
+        color: #3d7dca;
+        font-size: 2rem;
+        margin-bottom: 1.2rem;
     }
 
     p {
-        font-size: 1.2em;
+        font-size: 1.2rem;
         color: #555;
         margin-bottom: 20px;
     }
@@ -39,69 +48,50 @@
         display: inline-block;
         margin: 10px;
         padding: 10px 20px;
-        font-size: 1em;
-        color: #fff;
-        background-color: #ff3333;
+        font-size: 1rem;
+        color: #ffffff;
+        background-color: #3d7dca;
         border-radius: 5px;
         text-decoration: none;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.3s ease, transform 0.2s;
     }
 
     a:hover {
-        background-color: #cc0000;
+        background-color: #ffcb05;
+        color: #3d7dca;
+        transform: scale(1.05);
     }
 
-    .alert {
-        padding: 15px;
-        margin-bottom: 20px;
-        border-radius: 5px;
-        font-size: 1em;
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
     }
 
-    .alert-success {
-        background-color: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-    }
-
-    .alert-error {
-        background-color: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-    }
-
-    .alert-info {
-        background-color: #d1ecf1;
-        color: #0c5460;
-        border: 1px solid #bee5eb;
-    }
-
-    .alert-warning {
-        background-color: #fff3cd;
-        color: #856404;
-        border: 1px solid #ffeeba;
+    .logo {
+        width: 350px;
+        margin-bottom: 2rem;
+        animation: pulse 1.5s ease-in-out infinite;
     }
 </style>
 
+<img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo">
+
+<div class="example-wrapper">
     <h1>¡Bienvenido a la Pokemon App!</h1>
-    <p>Comienza tu aventura pokemon y atrapa a todos.</p>
+    <p>Comienza tu aventura Pokémon y atrapa a todos.</p>
 
     {% if not app.user %}
-        <a href="{{ path('app_login') }}" >Iniciar Sesión</a>
-        <a href="{{ path('app_register') }}" >Registrarse</a>
+        <a href="{{ path('app_login') }}">Iniciar Sesión</a>
+        <a href="{{ path('app_register') }}">Registrarse</a>
     {% else %}
         <a href="{{ path('app_pokedex_index') }}">Ver Pokémon</a>
-        <a href="{{ path('app_hunt_pokemon') }}">Cazar Pokemon</a>
-        <a href="{{ path('app_battle_view') }}">Combatir Pokemon</a>
+        <a href="{{ path('app_hunt_pokemon') }}">Cazar Pokémon</a>
+        <a href="{{ path('app_battle_view') }}">Combatir Pokémon</a>
     {% endif %}
 
-    <br/><br/>
-
-    {% for type, messages in app.flashes %}
-        {% for message in messages %}
-        <div class="alert alert-{{ type }}">
-            {{ message }}
-        </div>
-        {% endfor %}
-    {% endfor %}
+</div>
 {% endblock %}
