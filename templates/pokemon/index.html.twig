@@ -3,17 +3,122 @@
 {% block title %}Pokemon index{% endblock %}
 
 {% block body %}
-    <h1>Pokemon index</h1>
+<style>
+    body {
+        background-color: #ffcb05; /* Amarillo Pokémon */
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 20px;
+    }
 
+    h1 {
+        color: #3d7dca; /* Azul Pokémon */
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .table-container {
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        border: 5px solid #3d7dca; /* Azul Pokémon */
+        width: 100%;
+        max-width: 1200px;
+        margin-bottom: 2rem;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1rem;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 2px solid #3d7dca; /* Azul Pokémon */
+    }
+
+    th {
+        background-color: #3d7dca; /* Azul Pokémon */
+        color: #ffffff;
+        font-size: 1.1rem;
+    }
+
+    td img {
+        width: 100px;
+        height: 100px;
+    }
+
+    tr:hover {
+        background-color: #f0f0f0;
+    }
+
+    a {
+        color: #3d7dca; /* Azul Pokémon */
+        text-decoration: none;
+        font-weight: bold;
+        margin-right: 10px;
+        transition: color 0.3s ease;
+    }
+
+    a:hover {
+        color: #ffcb05; /* Amarillo Pokémon */
+    }
+
+    .create-new-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 1rem;
+        color: #ffffff;
+        background-color: #3d7dca; /* Azul Pokémon */
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.2s;
+        border: none;
+        cursor: pointer;
+    }
+
+    .create-new-btn:hover {
+        background-color: #ffcb05; /* Amarillo Pokémon */
+        color: #3d7dca;
+        transform: scale(1.05);
+    }
+
+    .no-records {
+        color: #777;
+        font-style: italic;
+        text-align: center;
+        padding: 20px;
+    }
+
+    /* Contenedor flexible para centrar el botón */
+    .button-container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-top: 20px;
+    }
+</style>
+
+<h1>Pokemon Index</h1>
+
+<div class="table-container">
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Number</th>
+                <th>Image</th>
                 <th>Name</th>
                 <th>Type</th>
                 <th>Image</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -21,21 +126,27 @@
             <tr>
                 <td>{{ pokemon.id }}</td>
                 <td>{{ pokemon.number }}</td>
+                <td><img src="{{ asset('uploads/' ~ pokemon.image) }}" alt="{{ pokemon.name }}"></td>
                 <td>{{ pokemon.name }}</td>
                 <td>{{ pokemon.type ? pokemon.type|join(', ') : '' }}</td>
                 <td>{{ pokemon.image }}</td>
                 <td>
-                    <a href="{{ path('app_pokemon_show', {'id': pokemon.id}) }}">show</a>
-                    <a href="{{ path('app_pokemon_edit', {'id': pokemon.id}) }}">edit</a>
+                    <a href="{{ path('app_pokemon_show', {'id': pokemon.id}) }}">Show</a>
+                    <a href="{{ path('app_pokemon_edit', {'id': pokemon.id}) }}">Edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="7" class="no-records">No records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_pokemon_new') }}">Create new</a>
+    <!-- Contenedor para centrar el botón -->
+    <div class="button-container">
+        <a href="{{ path('app_pokemon_new') }}" class="create-new-btn">Create New</a>
+    </div>
+</div>
+
 {% endblock %}

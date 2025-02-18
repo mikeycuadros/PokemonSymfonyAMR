@@ -5,40 +5,55 @@
 {% block body %}
 <style>
     body {
-        background-color: #f0f0f0;
-        font-family: 'Arial', sans-serif;
-        color: #333;
-        text-align: center;
-        padding: 20px;
+        background-color: #ffcb05; /* Amarillo Pokémon */
+        font-family: 'Arial', sans-serif; /* Fuente moderna */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        flex-direction: column; /* Para alinear el logo arriba del contenido */
     }
 
     .logo {
-        max-width: 200px; /* Ajusta el tamaño del logo según sea necesario */
-        height: auto;
-        margin-bottom: 20px;
+        width: 250px; /* Ajusta el tamaño del logo según sea necesario */
+        {# margin-bottom: 2rem; /* Espacio debajo del logo */ #}
+        animation: pulse 1.5s ease-in-out infinite; /* Animación de "pulso" */
+    }
+
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1); /* Tamaño normal */
+        }
+        50% {
+            transform: scale(1.1); /* Tamaño un 10% más grande */
+        }
     }
 
     h2, h3 {
-        color: #ff3333;
+        color: #3d7dca; /* Azul Pokémon */
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         margin-bottom: 20px;
     }
 
     h2 {
-        font-size: 2em;
+        font-size: 1.8em; /* Tamaño de fuente más grande */
     }
 
     h3 {
-        font-size: 1.5em;
+        font-size: 1.4em; /* Tamaño de fuente más grande */
     }
 
     .battle-container {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        max-width: 800px;
-        margin: 0 auto;
+        background-color: #ffffff; /* Fondo blanco */
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        border: 5px solid #3d7dca; /* Azul Pokémon */
+        width: 100%;
+        height: 80%;
+        max-width: 800px; /* Ancho máximo del contenedor */
     }
 
     table {
@@ -56,7 +71,7 @@
     }
 
     th {
-        background-color: #ff3333;
+        background-color: #3d7dca; /* Azul Pokémon */
         color: #fff;
         font-size: 1.1em;
     }
@@ -69,19 +84,25 @@
         font-size: 1.2em;
         font-weight: bold;
         margin-top: 20px;
-        padding: 10px;
+        padding: 5px;
         border-radius: 5px;
+    }
+    .button-container {
+    display: flex;
+    justify-content: center; /* Centra los botones */
+    gap: 10px; /* Espaciado entre botones */
+    margin-top: 20px;
     }
 
     .winner-message.win {
-        background-color: #d4edda;
-        color: #28a745;
+        background-color: #d4edda; /* Verde claro */
+        color: #28a745; /* Verde oscuro */
         border: 1px solid #c3e6cb;
     }
 
     .winner-message.lose {
-        background-color: #f8d7da;
-        color: #dc3545;
+        background-color: #f8d7da; /* Rojo claro */
+        color: #dc3545; /* Rojo oscuro */
         border: 1px solid #f5c6cb;
     }
 
@@ -92,13 +113,43 @@
     .pokemon-section h3 {
         margin-bottom: 10px;
     }
+
+    .btn {
+        background-color: #3d7dca; /* Azul Pokémon */
+        color: #ffffff;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin: 0.5rem;
+    }
+
+    .btn:hover {
+        background-color: #ffcb05; /* Amarillo Pokémon */
+        color: #3d7dca; /* Azul Pokémon */
+    }
+
+    a {
+        color: #3d7dca; /* Azul Pokémon */
+        text-decoration: none;
+        margin: 0.5rem;
+    }
+
+    a:hover {
+        color: #ffcb05; /* Amarillo Pokémon */
+    }
+    img{
+        width: 100px;
+        height: 100px;
+    }
 </style>
 
 <div class="battle-container">
     <!-- Logo añadido aquí -->
-    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo">
+    {# <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo"> #}
 
-    <h2>¿Ya has elegido tu Pokémon?</h2>
     <h2>¡Empecemos con la batalla!</h2>
 
     <div class="pokemon-section">
@@ -106,6 +157,7 @@
         <table>
             <thead>
                 <tr>
+                    <th></th>
                     <th>Pokémon</th>
                     <th>Nivel</th>
                     <th>Fuerza</th>
@@ -113,6 +165,9 @@
             </thead>
             <tbody>
                 <tr>
+                    <td>
+                    <img src="{{ asset('uploads/' ~ pokedex.pokemon.image) }}" alt="{{ pokedex.pokemon.name }}" class="pokemon-image">
+                    </td>
                     <td>{{ pokedex.pokemon.name }}</td>
                     <td>{{ pokedex.level }}</td>
                     <td>{{ pokedex.strength }}</td>
@@ -126,6 +181,7 @@
         <table>
             <thead>
                 <tr>
+                    <th></th>
                     <th>Pokémon</th>
                     <th>Nivel</th>
                     <th>Fuerza</th>
@@ -133,6 +189,9 @@
             </thead>
             <tbody>
                 <tr>
+                    <td>
+                    <img src="{{ asset('uploads/' ~ enemy.image) }}" alt="{{ enemy.name }}" class="pokemon-image">
+                    </td>
                     <td>{{ enemy.name }}</td>
                     <td>{{ enemy_level }}</td>
                     <td>{{ enemy_strength }}</td>
@@ -144,40 +203,35 @@
     <h3>Ganador:</h3>
 
     {% if (winner == 1) %}
-
-    <p>Has ganado la batalla!</p><br/>
-    <form action="{{ path('app_battle_levelUp', {'id': pokedex.id}) }}" method="GET" class="d-inline">
-        <button type="submit" class="btn btn-success btn-sm">Subir de nivel</button>
-    </form>
-
-    <form action="{{ path('app_pokedex_index') }}" method="GET" class="d-inline">
-        <button type="submit" class="btn btn-success btn-sm">Resucitar pokemons</button>
-    </form>
-    <form action="{{ path('app_capture_pokemon', {'id': enemy.id}) }}" method="POST" class="d-inline">
-        <button type="submit" class="btn btn-success btn-sm">Capturar</button>
-    </form>
-
+        <div class="winner-message win">
+            <p>¡Has ganado la batalla!</p>
+        </div>
+        <div class="button-container">
+        <form action="{{ path('app_battle_levelUp', {'id': pokedex.id}) }}" method="GET" class="d-inline">
+            <button type="submit" class="btn">Subir de nivel</button>
+        </form>
+        <form action="{{ path('app_pokedex_index') }}" method="GET" class="d-inline">
+            <button type="submit" class="btn">Resucitar pokémons</button>
+        </form>
+        <form action="{{ path('app_capture_pokemon', {'id': enemy.id}) }}" method="POST" class="d-inline">
+            <button type="submit" class="btn">Capturar</button>
+        </form>
+        </div>
 
         {% if (pokedex.level % 10 == 0) %}
-
-        <p>Puedes evolucionar a tu pokemon!</p>
-
+            <p>¡Puedes evolucionar a tu Pokémon!</p>
         {% endif %}
-
-
     {% else %}
-
-    <p>Has perdido la batalla!</p><br>
-    <p>Tu pokemon ha quedado malherido</p>
-
+        <div class="winner-message lose">
+            <p>¡Has perdido la batalla!</p>
+            <p>Tu Pokémon ha quedado malherido.</p>
+        </div>
     {% endif %}
 
-
-    <a href="{{ path('app_main') }}">Volver al inicio</a>
-    <a href="{{ path('app_pokedex_index') }}">Ir a Pokedex</a>
-    <a href= "{{ path('app_battle_view') }}">Volver a luchar</a>
-
-
-
-    
+    <div>
+        <a href="{{ path('app_main') }}">Volver al inicio</a>
+        <a href="{{ path('app_pokedex_index') }}">Ir a Pokédex</a>
+        <a href="{{ path('app_battle_view') }}">Volver a luchar</a>
+    </div>
+</div>
 {% endblock %}

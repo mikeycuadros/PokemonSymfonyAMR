@@ -8,6 +8,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
+
 
 class PokemonType extends AbstractType
 {
@@ -45,8 +48,25 @@ class PokemonType extends AbstractType
                 ],
                 'expanded' => true,
                 'multiple' => true,
+                'attr' => ['class' => 'form-check'],
             ])
-            ->add('image');
+            ->add('image', FileType::class, [
+                'label' => 'Image',
+                'mapped' => true,
+                'required' => true,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/gif',
+                            'image/webp', // Si deseas soportar WebP
+                        ],
+                        'mimeTypesMessage' => 'Por favor, sube una imagen válida (JPEG, PNG, GIF, WebP).',
+                    ])
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

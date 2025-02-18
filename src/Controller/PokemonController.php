@@ -11,6 +11,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 #[Route('/pokemon')]
 final class PokemonController extends AbstractController
@@ -24,24 +27,44 @@ final class PokemonController extends AbstractController
     }
 
     #[Route('/new', name: 'app_pokemon_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, ParameterBagInterface $params): Response
     {
         $pokemon = new Pokemon();
         $form = $this->createForm(PokemonType::class, $pokemon);
         $form->handleRequest($request);
-
+    
+        // Obtener el directorio de las imágenes desde el parámetro
+        $brochuresDirectory = $params->get('brochures_directory');
+    
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('image')->getData();
+            
+            if ($image) {
+                $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
+    
+                try {
+                    $image->move($brochuresDirectory, $newFilename);
+                } catch (FileException $e) {
+                }
+    
+                $pokemon->setImage($newFilename);
+            }
+    
             $entityManager->persist($pokemon);
             $entityManager->flush();
-
+            
             return $this->redirectToRoute('app_pokemon_index', [], Response::HTTP_SEE_OTHER);
         }
-
+    
         return $this->render('pokemon/new.html.twig', [
             'pokemon' => $pokemon,
             'form' => $form,
         ]);
     }
+    
+    
 
     #[Route("/hunt", name: "app_hunt_pokemon", methods: ['GET'])]
     public function huntPokemon(EntityManagerInterface $entityManager): Response
@@ -83,7 +106,7 @@ final class PokemonController extends AbstractController
         }
 
         $this->addFlash($type, $message);
-        return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_hunt_pokemon', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}', name: 'app_pokemon_show', methods: ['GET'])]
