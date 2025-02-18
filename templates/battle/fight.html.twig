@@ -1,176 +1,209 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Fight{% endblock %}
+{% block title %}Fight
+{% endblock %}
 
 {% block body %}
-<style>
-    body {
-        background-color: #ffcb05;
-        font-family: Arial, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        padding-top: 1vh;
-        flex-direction: column;
-    }
+	<style>
+		body {
+			background-color: #ffcb05;
+			font-family: Arial, sans-serif;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+			padding-top: 1vh;
+			flex-direction: column;
+		}
 
-    .example-wrapper {
-        background-color: #ffffff;
-        padding: 2rem;
-        border-radius: 15px;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-        text-align: center;
-        border: 5px solid #3d7dca;
-        width: 100%;
-        height: 68%;
-        max-width: 800px;
-        transition: transform 0.3s ease;
-    }
+		.example-wrapper {
+			background-color: #ffffff;
+			padding: 2.5rem;
+			border-radius: 15px;
+			box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+			text-align: center;
+			border: 5px solid #3d7dca;
+			width: 90%;
+			max-width: 800px;
+			max-height: 85vh;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 2rem;
+		}
 
-    .example-wrapper:hover {
-        transform: scale(1.02);
-    }
+		h3 {
+			color: #3d7dca;
+			font-size: 1.7rem;
+			margin-bottom: 1rem;
+		}
 
-    h3 {
-        color: #3d7dca;
-        font-size: 2rem;
-        margin-bottom: 1.2rem;
-    }
+		h2 {
+			color: #555;
+			font-size: 1.4rem;
+			margin-bottom: 1rem;
+		}
 
-    h2 {
-        color: #555;
-        font-size: 1.5rem;
-        margin-bottom: 20px;
-    }
+		.table-container {
+			flex-grow: 1;
+			overflow-y: auto; /* Scroll solo en la tabla */
+			max-height: 60vh; /* Aumentado para que la tabla sea más grande */
+			margin-top: 10px;
+		}
 
-    .table-container {
-        width: 100%;
-        overflow-x: auto; /* Para que la tabla sea responsive */
-        margin-top: 20px; /* Espacio entre el logo y la tabla */
-        height: 80%;
-    }
+		.table {
+			width: 100%;
+			background-color: #fff;
+			border-collapse: collapse;
+			font-size: 1rem; /* Aumentado el tamaño de la fuente */
+		}
 
-    .table {
-        width: 100%;
-        margin: 0 auto;
-        background-color: #fff;
-        border-collapse: collapse;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+		.table th,
+		.table td {
+			padding: 10px; /* Más espacio dentro de las celdas */
+			border-bottom: 2px solid #3d7dca;
+		}
 
-    .table th, .table td {
-        padding: 12px;
-        border-bottom: 1px solid #ddd;
-        border-bottom: 2px solid #3d7dca; /* Azul Pokémon */
+		.table th {
+			background-color: #3d7dca;
+			color: #fff;
+			font-size: 1.2rem;
+		}
 
-    }
+		.table td {
+			color: #555;
+		}
 
-    .table th {
-        background-color: #3d7dca;
-        color: #fff;
-        font-size: 1.2em;
-    }
+		.table tr:hover {
+			background-color: #f5f5f5;
+		}
 
-    .table td {
-        color: #555;
-    }
+		.img {
+			width: 80px; /* Aumentado el tamaño de las imágenes */
+			height: 80px;
+		}
 
-    .table tr:hover {
-        background-color: #f5f5f5;
-    }
+		.btn {
+			padding: 8px 16px;
+			font-size: 0.9em;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s ease, transform 0.2s;
+		}
 
-    .btn {
-        padding: 8px 16px;
-        font-size: 0.9em;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.2s;
-    }
+		.btn-success {
+			background-color: #3d7dca;
+			color: #fff;
+		}
 
-    .btn-success {
-        background-color: #3d7dca;
-        color: #fff;
-    }
+		.btn-success:hover {
+			background-color: #ffcb05;
+			color: #3d7dca;
+			transform: scale(1.05);
+		}
 
-    .btn-success:hover {
-        background-color: #ffcb05;
-        color: #3d7dca;
-        transform: scale(1.05);
-    }
+		.no-records {
+			color: #777;
+			font-style: italic;
+		}
 
-    .no-records {
-        color: #777;
-        font-style: italic;
-    }
+		.logo {
+			width: 250px;
+			margin-bottom: 0.5rem;
+			animation: pulse 1.5s ease-in-out infinite;
+		}
 
-    .logo {
-        width: 350px;
-        margin-bottom: 0.2rem;
-        animation: pulse 1.5s ease-in-out infinite;
-    }
+		@keyframes pulse {
+			0,
+			100% {
+				transform: scale(1);
+			}
+			50% {
+				transform: scale(1.1);
+			}
+		}
 
-    @keyframes pulse {
-        0%, 100% {
-            transform: scale(1);
-        }
-        50% {
-            transform: scale(1.1);
-        }
-    }
+		@media(max-width: 768px) {
+			.example-wrapper {
+				width: 95%;
+				max-width: 600px;
+			}
 
-    .img{
-        width: 100px;
-        height: 100px;
-    }
-</style>
+			h3 {
+				font-size: 1.4rem;
+			}
 
-<!-- Logo en la parte superior -->
-<img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo">
+			h2 {
+				font-size: 1.1rem;
+			}
 
-<!-- Contenedor de la tabla -->
-<div class="example-wrapper">
-    <h3>Parece que tienes una batalla pendiente...</h3>
-    <h2>Elige tu Pokémon:</h2>
+			.table-container {
+				max-height: 50vh; /* Reduce el tamaño de la tabla en móviles */
+			}
 
-    <div class="table-container">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Pokémon</th>
-                    <th>Nivel</th>
-                    <th>Fuerza</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for pokedex in pokedexes %}
-                <tr>
-                    <td>
-                    <img src="{{ asset('uploads/' ~ pokedex.pokemon.image) }}" alt="{{ pokedex.pokemon.name }}" class="img">
-                    </td>
-                    <td>{{ pokedex.pokemon.name }}</td>
-                    <td>{{ pokedex.level }}</td>
-                    <td>{{ pokedex.strength }}</td>
-                    {% if (pokedex.state == 1) %}
-                    <td>
-                        <form action="{{ path('app_battle_pokemon', {'id': pokedex.id}) }}" method="GET" class="d-inline">
-                            <button type="submit" class="btn btn-success">Elegir</button>
-                        </form>
-                    </td>
-                    {% endif %}
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="4" class="no-records">No se encontraron registros</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
+			.table th,
+			.table td {
+				font-size: 0.85rem;
+				padding: 8px;
+			}
+
+			.img {
+				width: 60px;
+				height: 60px;
+			}
+
+			.btn {
+				font-size: 0.8rem;
+				padding: 6px 12px;
+			}
+
+			.logo {
+				width: 200px;
+			}
+		}
+	</style>
+
+	<img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo">
+
+	<div class="example-wrapper">
+		<h3>Parece que tienes una batalla pendiente...</h3>
+		<h2>Elige tu Pokémon:</h2>
+
+		<div class="table-container">
+			<table class="table">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Pokémon</th>
+						<th>Nivel</th>
+						<th>Fuerza</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for pokedex in pokedexes %}
+						<tr>
+							<td><img src="{{ asset('uploads/' ~ pokedex.pokemon.image) }}" alt="{{ pokedex.pokemon.name }}" class="img"></td>
+							<td>{{ pokedex.pokemon.name }}</td>
+							<td>{{ pokedex.level }}</td>
+							<td>{{ pokedex.strength }}</td>
+							{% if (pokedex.state == 1) %}
+								<td>
+									<form action="{{ path('app_battle_pokemon', {'id': pokedex.id}) }}" method="GET">
+										<button type="submit" class="btn btn-success">Elegir</button>
+									</form>
+								</td>
+							{% endif %}
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="5" class="no-records">No se encontraron registros</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
 {% endblock %}
