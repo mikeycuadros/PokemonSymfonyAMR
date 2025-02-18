@@ -5,29 +5,55 @@
 {% block body %}
 <style>
     body {
-        background-color: #f0f0f0;
-        font-family: 'Arial', sans-serif;
-        color: #333;
+        background-color: #ffcb05;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        padding-top: 1vh;
+        flex-direction: column;
+    }
+
+    .example-wrapper {
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         text-align: center;
-        padding: 20px;
+        border: 5px solid #3d7dca;
+        width: 100%;
+        height: 68%;
+        max-width: 800px;
+        transition: transform 0.3s ease;
+    }
+
+    .example-wrapper:hover {
+        transform: scale(1.02);
     }
 
     h3 {
-        color: #ff3333;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        font-size: 1.8em;
-        margin-bottom: 10px;
+        color: #3d7dca;
+        font-size: 2rem;
+        margin-bottom: 1.2rem;
     }
 
     h2 {
         color: #555;
-        font-size: 1.5em;
+        font-size: 1.5rem;
         margin-bottom: 20px;
+    }
+
+    .table-container {
+        width: 100%;
+        overflow-x: auto; /* Para que la tabla sea responsive */
+        margin-top: 20px; /* Espacio entre el logo y la tabla */
+        height: 80%;
     }
 
     .table {
         width: 100%;
-        max-width: 800px;
         margin: 0 auto;
         background-color: #fff;
         border-collapse: collapse;
@@ -38,10 +64,12 @@
     .table th, .table td {
         padding: 12px;
         border-bottom: 1px solid #ddd;
+        border-bottom: 2px solid #3d7dca; /* Azul Pokémon */
+
     }
 
     .table th {
-        background-color: #ff3333;
+        background-color: #3d7dca;
         color: #fff;
         font-size: 1.2em;
     }
@@ -60,61 +88,89 @@
         border: none;
         border-radius: 5px;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.3s ease, transform 0.2s;
     }
 
     .btn-success {
-        background-color: #28a745;
+        background-color: #3d7dca;
         color: #fff;
     }
 
     .btn-success:hover {
-        background-color: #218838;
+        background-color: #ffcb05;
+        color: #3d7dca;
+        transform: scale(1.05);
     }
 
     .no-records {
         color: #777;
         font-style: italic;
     }
+
+    .logo {
+        width: 350px;
+        margin-bottom: 0.2rem;
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+    }
+
+    .img{
+        width: 100px;
+        height: 100px;
+    }
 </style>
 
+<!-- Logo en la parte superior -->
+<img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo">
+
+<!-- Contenedor de la tabla -->
 <div class="example-wrapper">
     <h3>Parece que tienes una batalla pendiente...</h3>
     <h2>Elige tu Pokémon:</h2>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Pokémon</th>
-                <th>Nivel</th>
-                <th>Fuerza</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for pokedex in pokedexes %}
-            <tr>
-                <td>{{ pokedex.pokemon.name }}</td>
-                <td>{{ pokedex.level }}</td>
-                <td>{{ pokedex.strength }}</td>
-                {% if (pokedex.state == 1) %}
-                <td>
-                    <form action="{{ path('app_battle_pokemon', {'id': pokedex.id}) }}" method="GET" class="d-inline">
-                        <button type="submit" class="btn btn-success">Elegir</button>
-                    </form>
-                </td>
-                {% endif %}
-                {# <td>
-                    <a href="{{ path('app_pokedex_show', {'id': pokedex.id}) }}">show</a>
-                    <a href="{{ path('app_pokedex_edit', {'id': pokedex.id}) }}">edit</a>
-                </td> #}
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4" class="no-records">No se encontraron registros</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Pokémon</th>
+                    <th>Nivel</th>
+                    <th>Fuerza</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for pokedex in pokedexes %}
+                <tr>
+                    <td>
+                    <img src="{{ asset('uploads/' ~ pokedex.pokemon.image) }}" alt="{{ pokedex.pokemon.name }}" class="img">
+                    </td>
+                    <td>{{ pokedex.pokemon.name }}</td>
+                    <td>{{ pokedex.level }}</td>
+                    <td>{{ pokedex.strength }}</td>
+                    {% if (pokedex.state == 1) %}
+                    <td>
+                        <form action="{{ path('app_battle_pokemon', {'id': pokedex.id}) }}" method="GET" class="d-inline">
+                            <button type="submit" class="btn btn-success">Elegir</button>
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="no-records">No se encontraron registros</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}

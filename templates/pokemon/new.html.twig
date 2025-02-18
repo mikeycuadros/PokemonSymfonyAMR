@@ -1,17 +1,130 @@
 {% extends 'base.html.twig' %}
-
-{% block stylesheets %}
-<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-{% endblock %}
-
-
 {% block title %}New Pokemon{% endblock %}
 
-
 {% block body %}
+
+<style>
+    body {
+        background-color: #ffcb05; /* Amarillo Pokémon */
+        font-family: 'Arial', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        flex-direction: column;
+    }
+
+    .logo {
+        width: 250px;
+        margin-bottom: 2rem;
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+    }
+
+    h1 {
+        color: #3d7dca;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px;
+        font-size: 1.8em;
+    }
+
+    .form-container {
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        border: 5px solid #3d7dca;
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .form-container label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #3d7dca;
+    }
+
+    .form-container input[type="text"],
+    .form-container select,
+    .form-container input[type="file"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .form-container .form-check {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px; / Espacio entre los checkboxes /
+    }
+
+    / Estilo para cada checkbox /
+    .form-container .form-check .form-check-input {
+        margin-right: 5px; / Espacio entre el checkbox y su etiqueta /
+    }
+
+    / Estilo para las etiquetas de los checkboxes /
+    .form-container .form-check .form-check-label {
+        display: inline-block; / Asegura que las etiquetas estén en línea /
+        width: 100px; / Ancho fijo para las etiquetas */
+    }
+
+    /* Contenedor para los botones */
+    .button-container {
+        display: flex;
+        justify-content: center; /* Centra los botones horizontalmente */
+        gap: 10px; /* Espacio entre los botones */
+    }
+
+    .btn {
+        background-color: #3d7dca;
+        color: #ffffff;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: #ffcb05;
+        color: #3d7dca;
+    }
+
+    a {
+        color: #3d7dca;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #ffcb05;
+    }
+</style>
+
+<div class="form-container">
+    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo">
+    
     <h1>Create new Pokemon</h1>
 
     {{ include('pokemon/_form.html.twig') }}
 
-    <a href="{{ path('app_pokemon_index') }}">back to list</a>
+    <!-- Contenedor para los botones -->
+    <div class="button-container">
+        <a href="{{ path('app_pokemon_index') }}" class="btn">Back to list</a>
+    </div>
+</div>
 {% endblock %}

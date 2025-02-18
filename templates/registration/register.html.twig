@@ -3,96 +3,164 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+<style>
+    body {
+        background-color: #ffcb05;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        flex-direction: column;
+    }
+
+    .register-container {
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        border: 5px solid #3d7dca;
+        width: 100%;
+        max-width: 380px;
+        transition: transform 0.3s ease;
+    }
+
+    .register-container:hover {
+        transform: scale(1.02);
+    }
+
+    h1 {
+        color: #3d7dca;
+        font-size: 1.8rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.2rem;
+        text-align: left;
+    }
+
+    .form-group label {
+        color: #3d7dca;
+        font-size: 1rem;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 0.4rem;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 0.6rem;
+        border: 2px solid #3d7dca;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    .form-group input:focus {
+        border-color: #ffcb05;
+        outline: none;
+        box-shadow: 0 0 5px rgba(255, 203, 5, 0.8);
+    }
+
+    .checkbox-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    .checkbox-container label {
+        margin-left: 0.5rem;
+        font-size: 1rem;
+        color: #3d7dca;
+    }
+
+    .btn {
+        background-color: #3d7dca;
+        color: #ffffff;
+        border: none;
+        padding: 0.8rem;
+        font-size: 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s;
+        width: 100%;
+    }
+
+    .btn:hover {
+        background-color: #ffcb05;
+        color: #3d7dca;
+        transform: scale(1.05);
+    }
+
+    .form-errors {
+        background-color: #ff0000;
+        color: #ffffff;
+        padding: 0.75rem;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        text-align: center;
+    }
+
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
         }
-
-        .register-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
+        50% {
+            transform: scale(1.1);
         }
+    }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-        }
+    .logo {
+        width: 220px;
+        margin-bottom: 1.8rem;
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+</style>
 
-        .form-group {
-            margin-bottom: 15px;
-        }
+<img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo">
 
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-        }
+<div class="register-container">
+    <h1>Register</h1>
 
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-        }
+    {{ form_errors(registrationForm) }}
 
-        .form-group input:focus {
-            border-color: #007bff;
-            outline: none;
-        }
+    {{ form_start(registrationForm) }}
+        <div class="form-group">
+            {{ form_row(registrationForm.username, {
+                label: 'Username',
+                attr: {
+                    class: 'form-control',
+                    placeholder: 'Enter your username'
+                }
+            }) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(registrationForm.plainPassword, {
+                label: 'Password',
+                attr: {
+                    class: 'form-control',
+                    placeholder: 'Enter your password'
+                }
+            }) }}
+        </div>
+        <div class="checkbox-container">
+            {{ form_widget(registrationForm.agreeTerms, {
+                attr: {
+                    class: 'form-check-input'
+                }
+            }) }}
+            {{ form_label(registrationForm.agreeTerms, 'Agree to terms', {
+                label_attr: {
+                    class: 'form-check-label'
+                }
+            }) }}
+        </div>
 
-        .btn {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            border: none;
-            border-radius: 4px;
-            color: #fff;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background-color: #0056b3;
-        }
-
-        .form-errors {
-            color: #dc3545;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-    </style>
-
-    <div class="register-container">
-        <h1>Register</h1>
-
-        {{ form_errors(registrationForm) }}
-
-        {{ form_start(registrationForm) }}
-            <div class="form-group">
-                {{ form_row(registrationForm.username) }}
-            </div>
-            <div class="form-group">
-                {{ form_row(registrationForm.plainPassword, {
-                    label: 'Password'
-                }) }}
-            </div>
-            <div class="form-group">
-                {{ form_row(registrationForm.agreeTerms) }}
-            </div>
-
-            <button type="submit" class="btn">Register</button>
-        {{ form_end(registrationForm) }}
-    </div>
+        <button type="submit" class="btn">Register</button>
+    {{ form_end(registrationForm) }}
+</div>
 {% endblock %}
