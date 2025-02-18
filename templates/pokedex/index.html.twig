@@ -19,14 +19,13 @@
 
     .example-wrapper {
         background-color: #fff;
-        padding: 2rem;
-        border-radius: 16px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        padding: 1rem; /* Padding más pequeño */
+        border-radius: 12px; /* Bordes más pequeños */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra más pequeña */
         text-align: center;
-        border: 4px solid #3d7dca; /* Azul Pokémon */
-        width: 100%;
-        height:70%;
-        max-width: 900px;
+        border: 3px solid #3d7dca; /* Azul Pokémon */
+        width: 95%; /* Ancho relativo */
+        max-width: 800px; /* Ancho máximo reducido */
         margin: 0 auto 1rem auto;
         box-sizing: border-box;
         overflow: hidden;
@@ -35,25 +34,24 @@
     .table-container {
         width: 100%;
         overflow-x: auto; /* Para que la tabla sea responsive */
-        margin-top: 20px; /* Espacio entre el logo y la tabla */
-        height: 85%;
+        margin-top: 10px; /* Espacio más pequeño */
+        height: 80%; /* Altura reducida */
     }
 
     .table {
         width: 100%;
         table-layout: fixed;
         border-collapse: collapse;
-        margin-top: 1.5rem;
+        margin-top: 1rem; /* Margen más pequeño */
     }
 
     .table th, .table td {
-        padding: 15px;
+        padding: 10px; /* Padding más pequeño */
         border-bottom: 1px solid #ddd;
         text-align: center;
-        font-size: 1.1rem;
+        font-size: 0.9rem; /* Tamaño de fuente más pequeño */
         word-wrap: break-word;
         border-bottom: 2px solid #3d7dca; /* Azul Pokémon */
-
     }
 
     .table th {
@@ -61,15 +59,15 @@
         color: #fff;
         font-weight: bold;
         text-transform: uppercase;
-        font-size: 1.2rem;
-        letter-spacing: 1px;
+        font-size: 1rem; /* Tamaño de fuente más pequeño */
+        letter-spacing: 0.5px; /* Menor espaciado */
     }
 
     .btn {
-        padding: 12px 24px;
-        font-size: 1rem;
+        padding: 8px 16px; /* Padding más pequeño */
+        font-size: 0.9rem; /* Tamaño de fuente más pequeño */
         border: none;
-        border-radius: 8px;
+        border-radius: 6px; /* Bordes más pequeños */
         cursor: pointer;
         transition: background-color 0.3s ease, transform 0.3s ease;
         font-weight: bold;
@@ -83,13 +81,13 @@
 
     .btn-success:hover {
         background-color: #218838; /* Verde oscuro */
-        transform: translateY(-3px);
+        transform: translateY(-2px); /* Efecto más pequeño */
     }
 
     h1 {
         color: #3d7dca; /* Azul Pokémon */
-        font-size: 2.5rem;
-        margin-bottom: 1.5rem;
+        font-size: 2rem; /* Tamaño de fuente más pequeño */
+        margin-bottom: 1rem; /* Margen más pequeño */
     }
 
     .no-records {
@@ -100,15 +98,15 @@
 
     .logo {
         display: block;
-        margin: 0 auto 1rem; /* Centrado con margen inferior */
-        width: 300px; /* Tamaño del logo */
+        margin: 0 auto 0.5rem; /* Margen más pequeño */
+        width: 200px; /* Tamaño del logo reducido */
     }
 
     .alert {
-        padding: 15px;
-        margin-bottom: 3px;
-        border-radius: 5px;
-        font-size: 1rem;
+        padding: 10px; /* Padding más pequeño */
+        margin-bottom: 2px; /* Margen más pequeño */
+        border-radius: 4px; /* Bordes más pequeños */
+        font-size: 0.9rem; /* Tamaño de fuente más pequeño */
         text-align: center;
     }
 
@@ -136,30 +134,42 @@
         border: 1px solid #ffeeba;
     }
 
+    img {
+        width: 80px; /* Tamaño de imagen reducido */
+    }
+
+    /* Media queries para responsividad */
     @media (max-width: 768px) {
         body {
-            padding-top: 2vh;
+            padding-top: 1vh;
         }
 
         .example-wrapper {
-            padding: 1.5rem;
+            padding: 0.75rem; /* Padding más pequeño en móviles */
         }
 
         .logo {
-            width: 250px; /* Reducir tamaño del logo en móviles */
+            width: 150px; /* Tamaño del logo más pequeño en móviles */
         }
 
         h1 {
-            font-size: 2rem; /* Reducir tamaño del título en móviles */
+            font-size: 1.5rem; /* Tamaño de fuente más pequeño en móviles */
         }
 
         .btn {
             width: 100%; /* Botones de ancho completo en móviles */
-            margin: 0.5rem 0; /* Espaciado vertical entre botones */
+            margin: 0.25rem 0; /* Espaciado vertical más pequeño */
+            font-size: 0.8rem; /* Tamaño de fuente más pequeño en móviles */
         }
-    }
-    img{
-        width: 100px;
+
+        .table th, .table td {
+            padding: 8px; /* Padding más pequeño en móviles */
+            font-size: 0.8rem; /* Tamaño de fuente más pequeño en móviles */
+        }
+
+        img {
+            width: 60px; /* Tamaño de imagen más pequeño en móviles */
+        }
     }
 </style>
 
@@ -168,66 +178,56 @@
 <div class="example-wrapper">
     <h1>Pokédex</h1>
 
-        {% for type, messages in app.flashes %}
+    {% for type, messages in app.flashes %}
         {% for message in messages %}
-        <div class="alert alert-{{ type }}">
-            {{ message }}
-        </div>
+            <div class="alert alert-{{ type }}">
+                {{ message }}
+            </div>
         {% endfor %}
     {% endfor %}
 
- <div class="table-container">
- <table class="table">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Pokémon</th>
-                <th>Nivel</th>
-                <th>Fuerza</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for pokedex in pokedexes %}
-            <tr>
-                <td class="img"><img src="{{ asset('uploads/' ~ pokedex.pokemon.image) }}" alt="{{ pokedex.pokemon.name }}"></td>
-                <td>{{ pokedex.pokemon.name }}</td>
-                <td>{{ pokedex.level }}</td>
-                <td>{{ pokedex.strength }}</td>
-                <td>
-                    {% if (pokedex.state == 1) %}
-                <td>
-                    <form action="{{ path('app_train_pokemon', {'id': pokedex.id}) }}" method="POST">
-                        <button type="submit">Entrenar</button>
-                    </form>
-                </td>
-
-                <td>
-                    {% if pokedex.level % 10 == 0  and pokedex.lastEvolutionLevel != pokedex.level %}
-                        <form action="{{ path('app_pokedex_evolve', {'id': pokedex.id}) }}" method="POST">
-                            <button type="submit">Evolucionar</button>
-                        </form>
-                    {% endif %}
-                </td>
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Pokémon</th>
+                    <th>Nivel</th>
+                    <th>Fuerza</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pokedex in pokedexes %}
+                    <tr>
+                        <td class="img"><img src="{{ asset('uploads/' ~ pokedex.pokemon.image) }}" alt="{{ pokedex.pokemon.name }}"></td>
+                        <td>{{ pokedex.pokemon.name }}</td>
+                        <td>{{ pokedex.level }}</td>
+                        <td>{{ pokedex.strength }}</td>
+                        <td>
+                            {% if pokedex.state == 1 %}
+                                <form action="{{ path('app_train_pokemon', {'id': pokedex.id}) }}" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-success">Entrenar</button>
+                                </form>
+                                {% if pokedex.level % 10 == 0 and pokedex.lastEvolutionLevel != pokedex.level %}
+                                    <form action="{{ path('app_pokedex_evolve', {'id': pokedex.id}) }}" method="POST" class="d-inline">
+                                        <button type="submit" class="btn btn-success">Evolucionar</button>
+                                    </form>
+                                {% endif %}
+                            {% else %}
+                                <form action="{{ path('app_pokedex_revive', {'id': pokedex.id}) }}" method="POST">
+                                    <button type="submit" class="btn btn-success">Revivir</button>
+                                </form>
+                            {% endif %}
+                        </td>
+                    </tr>
                 {% else %}
-
-                
-                <td>
-                    <form action="{{ path('app_pokedex_revive', {'id': pokedex.id}) }}" method="POST">
-                        <button type="submit">Revivir</button>
-                    </form>
-                </td>
-
-                {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4" class="no-records">No se encontraron registros</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
+                    <tr>
+                        <td colspan="5" class="no-records">No se encontraron registros</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}

@@ -111,6 +111,7 @@ final class BattleController extends AbstractController
     #[Route('/{id}', name: 'app_battle_show', methods: ['GET'])]
     public function show(Battle $battle): Response
     {
+        
         return $this->render('battle/show.html.twig', [
             'battle' => $battle,
         ]);
