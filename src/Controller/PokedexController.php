@@ -97,7 +97,7 @@ final class PokedexController extends AbstractController
         $type = 'success';
         $this->addFlash($type, $message);
 
-        return $this->redirectToRoute('app_pokedex_index');
+        return $this->redirectToRoute('app_main');
     }
 
     #[Route('/{id}', name: 'app_pokedex_show', methods: ['GET'])]
